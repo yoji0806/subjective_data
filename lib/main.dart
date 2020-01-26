@@ -42,28 +42,27 @@ class _MyHomePageState extends State<MyHomePage> {
 
 
 
-  void _incrementCounter() {
-    setState(() {
-      if(jsonData == ""){
-        loadJsonAsset();
-      }else{
-        jsonData = "";
-      }
-
-
-    });
-  }
+//  void _incrementCounter() {
+//    setState(() {
+//      if(jsonData == ""){
+//        loadJsonAsset();
+//      }else{
+//        jsonData = "";
+//      }
+//
+//
+//    });
+//  }
 
 
   //Jsonをstringとしてロード
-  Future<void> loadJsonAsset() async{
+  Future<String> _loadJsonAsset() async{
 
-    String loadData = await rootBundle.loadString('json/accessToken.json');
-    Map<String, dynamic> token = json.decode('json/accessToken.json');
-    jsonData = token.toString();
-    print(token);
+    String loadedData = await rootBundle.loadString('json/accessToken.json');
+    Map<String, dynamic> json_map = json.decode(loadedData);
+    accessToken = json_map['access_token'];
 
-
+    return accessToken;
   }
 
 
@@ -84,7 +83,7 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              'Push the button and you`ll see',
+              'iei',
             ),
             Text(
               '$jsonData',
@@ -94,7 +93,13 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
+        onPressed: () async{
+          try {
+            jsonData = await _loadJsonAsset();
+          }catch(err){
+            print('caugth an error: $err');
+          }
+        },
         tooltip: 'Increment',
         child: Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
