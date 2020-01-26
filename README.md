@@ -1,6 +1,7 @@
 # subjective_data
 
-the app to gather and manage rich sunbjective data.
+the app to gather sunbjective data as you want.
+at default, the data is stored in your Google SpreadSheet
 
 ## Getting Started
 
